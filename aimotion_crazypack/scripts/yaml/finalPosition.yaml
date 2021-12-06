@@ -1,0 +1,22 @@
+crazyflies:
+- channel: 100
+  finalPosition:
+  - -0.5737258300203049
+  - -0.12372583002030474
+  - 1.0613450242718445
+  id: 0
+  type: default
+- channel: 100
+  finalPosition:
+  - -1.1090962644125018
+  - -0.2671779055671933
+  - 1.0613450242718445
+  id: 1
+  type: default
+- channel: 100
+  finalPosition:
+  - -0.7171779055671935
+  - -0.6590962644125018
+  - 1.0613450242718445
+  id: 2
+  type: default

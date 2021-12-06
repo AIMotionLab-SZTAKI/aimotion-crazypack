@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="joy_dev" default="/dev/input/js0" />
+
+  <rosparam command="load" file="$(find crazyswarm)/launch/crazyflieTypes.yaml" />
+  <rosparam command="load" file="$(find crazyswarm)/launch/crazyflies.yaml" />
+
+  <node pkg="crazyswarm" type="crazyswarm_server" name="crazyswarm_server" output="screen" >
+    <rosparam>
+      world_frame: "/world"
+      # Logging configuration (Use enable_logging to actually enable logging)
+      genericLogTopics: ["log1"]
+      genericLogTopicFrequencies: [10]
+      <?ignore genericLogTopic_log1_Variables: ["ctrlGeom.cmd_pitch", "ctrlGeom.eRy","ctrlGeom.ewy", "ctrlGeom.p_des", "ctrlGeom.p", "ctrlGeom.wdy"]?>
+      <?ignore genericLogTopic_log1_Variables: ["ctrlGeom.p","ctrlGeom.p_des", "ctrlGeom.r_pitch", "ctrlGeom.wdy", "ctrlGeom.err_d_pitch","ctrlGeom.cmd_pitch"] ?>
+      <?ignore genericLogTopic_log1_Variables: ["stateEstimate.x", "ctrltarget.z","stateEstimate.z", "stabilizer.pitch", "ctrlGeom.p_des"]  ?>    
+      genericLogTopic_log1_Variables: ["motor.m1","motor.m2","motor.m3","motor.m4","stabilizer.roll","stabilizer.pitch","stabilizer.yaw"] 
+      <?ignore genericLogTopic_log1_Variables: ["ctrlMel.cmd_roll","ctrlMel.cmd_pitch","ctrlMel.cmd_yaw","stabilizer.roll","stabilizer.pitch","stabilizer.yaw"] ?>
+      # firmware parameters for all drones (use crazyflieTypes.yaml to set per type, or
+      # allCrazyflies.yaml to set per drone)
+      firmwareParams:
+        commander:
+          enHighLevel: 1
+        stabilizer:
+          estimator: 2 # 1: complementary, 2: kalman
+          controller: 2 # 1: PID, 2: mellinger
+        ring:
+          effect: 16 # 6: double spinner, 7: solid color, 16: packetRate
+          solidBlue: 255 # if set to solid color
+          solidGreen: 0 # if set to solid color
+          solidRed: 0 # if set to solid color
+          headlightEnable: 0
+        locSrv:
+          extPosStdDev: 1e-3
+          extQuatStdDev: 0.5e-1
+        kalman:
+          resetEstimation: 1
+      # tracking
+      motion_capture_type: "optitrack" # one of none,vicon,optitrack,qualisys,vrpn
+      object_tracking_type: "motionCapture" # one of motionCapture,libobjecttracker
+      send_position_only: False # set to False to send position+orientation; set to True to send position only
+      #vicon_host_name: "vicon"
+      optitrack_host_name: "192.168.1.20"<?ignore "172.16.204.128?>
+      optitrack_server_ip: "192.168.1.20"<?ignore 				"172.16.204.128?>
+      optitrack_local_ip: "192.168.1.10"<?ignore 		"172.16.204.1" ?>
+      # qualisys_host_name: "10.0.5.219"
+      # qualisys_base_port: 22222
+      # vrpn_host_name: "vicon"
+      save_point_clouds: ~/pointCloud.ot
+      print_latency: False
+      write_csvs: True
+      force_no_cache: False
+      enable_parameters: True
+      enable_logging: True
+    </rosparam>
+  </node>
+
+   <?ignore <!-- <node name="joy" pkg="joy" type="joy_node" output="screen">
+    <param name="dev" value="$(arg joy_dev)" />
+  </node>--> ?>
+
+<?ignore 
+  <node pkg="crazyswarm" type="crazyswarm_teleop" name="crazyswarm_teleop" output="screen">
+    <param name="csv_file" value="$(find crazyswarm)/launch/figure8_smooth.csv" />
+    <param name="timescale" value="0.8" />
+  </node>?>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find crazyswarm)/launch/test.rviz"/>
+
+  <!-- <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_x" args="/cf2/log1/values[0]"/> -->
+  <!-- <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_roll" args="/cf1/log1/values[2] /cf1/log1/values[3]"/> -->
+
+</launch>
