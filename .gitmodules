@@ -1,0 +1,3 @@
+[submodule "aimotion-crazypack-firmware"]
+	path = aimotion-crazypack-firmware
+	url = https://github.com/AIMotionLab-SZTAKI/aimotion-crazypack-firmware
