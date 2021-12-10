@@ -2,3 +2,11 @@
 crazyflies.yaml
 aimotion_crazypack/launch/crazyflies.yaml
 *.pyc
+urdf
+figures
+video
+aimotion_crazypack/scripts/csv/*
+# !aimotion_crazypack/scripts/csv/optitrack.csv
+log
+__pycache__
+.*
