@@ -5,3 +5,6 @@ catkin_make
 cd ../../aimotion-crazypack
 git submodule init
 git submodule update
+cd ../aimotion-crazypack-firmware
+git submodule init
+git submodule update
