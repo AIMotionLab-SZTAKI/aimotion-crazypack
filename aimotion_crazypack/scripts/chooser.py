@@ -17,7 +17,7 @@ if __name__ == '__main__':
 	parser.add_argument(
 		"--stm32Fw",
 		type=str,
-		default=os.path.join(os.path.dirname(os.path.realpath(__file__)), "../../../../crazyflie-firmware/cf2.bin"),
+		default=os.path.join(os.path.dirname(os.path.realpath(__file__)), "../../aimotion-crazypack-firmware/cf2.bin"),
 		help="Path to cf2.bin")
 	parser.add_argument(
 		"--nrf51Fw",
