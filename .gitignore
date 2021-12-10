@@ -1,1 +1,4 @@
 .idea
+crazyflies.yaml
+aimotion_crazypack/launch/crazyflies.yaml
+*.pyc

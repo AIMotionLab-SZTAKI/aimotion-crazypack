@@ -2,8 +2,8 @@
 <launch>
   <arg name="joy_dev" default="/dev/input/js0" />
 
-  <rosparam command="load" file="$(find crazyswarm)/launch/crazyflieTypes.yaml" />
-  <rosparam command="load" file="$(find crazyswarm)/launch/crazyflies.yaml" />
+  <rosparam command="load" file="/home/crazyfly/cfcontrol/aimotion-crazypack/aimotion_crazypack/launch/crazyflieTypes.yaml" />
+  <rosparam command="load" file="/home/crazyfly/cfcontrol/aimotion-crazypack/aimotion_crazypack/launch/crazyflies.yaml" />
 
   <node pkg="crazyswarm" type="crazyswarm_server" name="crazyswarm_server" output="screen" >
     <rosparam>
@@ -38,6 +38,7 @@
       object_tracking_type: "motionCapture" # one of motionCapture,libobjecttracker
       send_position_only: False # set to False to send position+orientation; set to True to send position only
       #vicon_host_name: "vicon"
+      motion_capture_host_name: "192.168.1.20"
       optitrack_host_name: "192.168.1.20"<?ignore "172.16.204.128?>
       optitrack_server_ip: "192.168.1.20"<?ignore 				"172.16.204.128?>
       optitrack_local_ip: "192.168.1.10"<?ignore 		"172.16.204.1" ?>
@@ -58,13 +59,13 @@
   </node>--> ?>
 
   <node pkg="crazyswarm" type="crazyswarm_teleop" name="crazyswarm_teleop" output="screen">
-    <param name="csv_file" value="$(find crazyswarm)/launch/figure8_smooth.csv" />
+    <param name="csv_file" value="/home/crazyfly/cfcontrol/aimotion-crazypack/aimotion_crazypack/launch/figure8_smooth.csv" />
     <param name="timescale" value="0.8" />
   </node>
 
-  <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find crazyswarm)/launch/test.rviz"/>-->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d /home/crazyfly/cfcontrol/aimotion-crazypack/aimotion_crazypack/launch/test.rviz"/>
 
-  <node name="rqt_plot" pkg="rqt_plot" type="rqt_plot" args="/cf2/rssi"/>
+  <?ignore <node name="rqt_plot" pkg="rqt_plot" type="rqt_plot" args="/cf2/rssi"/>?>
   <!-- <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_roll" args="/cf1/log1/values[2] /cf1/log1/values[3]"/> -->
 
 </launch>

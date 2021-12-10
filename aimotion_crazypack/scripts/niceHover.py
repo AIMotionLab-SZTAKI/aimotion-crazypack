@@ -28,7 +28,7 @@ if __name__ == "__main__":
     timeHelper.sleep(3)
     allcfs.setParam('motorPowerSet/isAv', 0)
     allcfs.setParam('motorPowerSet/isFF', 1)
-    print("press button to continue...")
+    print("press button to continue... :)")
     TIMESCALE = 0.6
     swarm.input.waitUntilButtonPressed()
 
