@@ -3,7 +3,7 @@
   <arg name="joy_dev" default="/dev/input/js0" />
 
   <rosparam command="load" file="/home/crazyfly/cfcontrol/aimotion-crazypack/aimotion_crazypack/launch/crazyflieTypes.yaml" />
-  <rosparam command="load" file="/home/crazyfly/cfcontrol/aimotion-crazypack/aimotion_crazypack/launch/crazyflieTypes.yaml" />
+  <rosparam command="load" file="/home/crazyfly/cfcontrol/aimotion-crazypack/aimotion_crazypack/launch/crazyflies.yaml" />
 
   <node pkg="crazyswarm" type="crazyswarm_server" name="crazyswarm_server" output="screen" >
     <rosparam>
@@ -13,8 +13,8 @@
       genericLogTopicFrequencies: [10]
       <?ignore genericLogTopic_log1_Variables: ["ctrlGeom.cmd_pitch", "ctrlGeom.eRy","ctrlGeom.ewy", "ctrlGeom.p_des", "ctrlGeom.p", "ctrlGeom.wdy"]?>
       <?ignore genericLogTopic_log1_Variables: ["ctrlGeom.p","ctrlGeom.p_des", "ctrlGeom.r_pitch", "ctrlGeom.wdy", "ctrlGeom.err_d_pitch","ctrlGeom.cmd_pitch"] ?>
-      <?ignore genericLogTopic_log1_Variables: ["stateEstimate.x", "ctrltarget.z","stateEstimate.z", "stabilizer.pitch", "ctrlGeom.p_des"]  ?>    
-      genericLogTopic_log1_Variables: ["motor.m1","motor.m2","motor.m3","motor.m4","stabilizer.roll","stabilizer.pitch","stabilizer.yaw"] 
+      genericLogTopic_log1_Variables: ["stateEstimate.x", "ctrltarget.x","stateEstimate.y", "ctrltarget.y"]    
+      <?ignore genericLogTopic_log1_Variables: ["motor.m1","motor.m2","motor.m3","motor.m4","stabilizer.roll","stabilizer.pitch","stabilizer.yaw"]  ?> 
       <?ignore genericLogTopic_log1_Variables: ["ctrlMel.cmd_roll","ctrlMel.cmd_pitch","ctrlMel.cmd_yaw","stabilizer.roll","stabilizer.pitch","stabilizer.yaw"] ?>
       # firmware parameters for all drones (use crazyflieTypes.yaml to set per type, or
       # allCrazyflies.yaml to set per drone)
@@ -60,11 +60,11 @@
     <param name="dev" value="$(arg joy_dev)" />
   </node>--> ?>
 
-<?ignore 
+
   <node pkg="crazyswarm" type="crazyswarm_teleop" name="crazyswarm_teleop" output="screen">
     <param name="csv_file" value="$(find crazyswarm)/launch/figure8_smooth.csv" />
     <param name="timescale" value="0.8" />
-  </node>?>
+  </node>
 
   <node name="rviz" pkg="rviz" type="rviz" args="-d /home/crazyfly/cfcontrol/aimotion-crazypack/aimotion_crazypack/launch/test.rviz"/>
 

@@ -52,26 +52,30 @@ if __name__ == "__main__":
     timeHelper.sleep(2)
 
     # Upload trajectories to cf
-    for j, cf in enumerate(allcfs.crazyflies):
-        cf.uploadTrajectory(0, 0, trajectories[0])
+    # for j, cf in enumerate(allcfs.crazyflies):
+    #     cf.uploadTrajectory(0, 0, trajectories[0])
 
     # SAFETY CHECK
     print("Starting position okay? Press button to continue...")
     # swarm.input.waitUntilButtonPressed()
+    timeHelper.sleep(3)
 
     # Trajectory following
     reverse = True
     timescale = 1.0
     # allcfs.setParam('ctrlMel/log_data', 1)
-    allcfs.startTrajectory(0, timescale=timescale, reverse=False)
-    timeHelper.sleep(traj1.duration * timescale + 1.0)
-
+    # allcfs.startTrajectory(0, timescale=timescale, reverse=False)
+    # timeHelper.sleep(traj1.duration * timescale + 1.0)
+    allcfs.crazyflies[0].goTo(np.array([-0.66, -0.27, targetHeight]), 0, 4.0)
+    #
+    timeHelper.sleep(4)
     for j, cf in enumerate(allcfs.crazyflies):
         cf.uploadTrajectory(1, 0, trajectories[1])
-    timeHelper.sleep(1)
+
     allcfs.startTrajectory(1, timescale=timescale, reverse=False)
     timeHelper.sleep(traj2.duration * timescale + 0.0)
-
+    timeHelper.sleep(1)
+    # allcfs.crazyflies[0].cmdStop()
     # for j, cf in enumerate(allcfs.crazyflies):
     #     cf.uploadTrajectory(2, 0, trajectories[2])
     # allcfs.startTrajectory(2, timescale=timescale, reverse=False)

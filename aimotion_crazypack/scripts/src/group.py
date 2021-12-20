@@ -37,7 +37,7 @@ class Group(Environment):
         # yaml.add_representer(float, float_representer)
         if position_type == 'initial':
             position = self.start_position
-            positions = self.position_generator(centerpoint = position, n_positions = len(self.vehicles), r = self.vehicles[0].radious * 4)
+            positions = self.position_generator(centerpoint = position, n_positions = len(self.vehicles), r = self.vehicles[0].radious * 1.6)
 
             if self.stage == 0:
                 yaml_dict = {'crazyflies' : []}
@@ -64,7 +64,7 @@ class Group(Environment):
             #     positions += [initialPosition['crazyflies'][i]['initialPosition'][:2]]
         elif position_type == 'final':
             position = self.goal_position
-            positions = self.position_generator(centerpoint = position, n_positions = len(self.vehicles), r = self.vehicles[0].radious * 4)
+            positions = self.position_generator(centerpoint = position, n_positions = len(self.vehicles), r = self.vehicles[0].radious * 1.6)
 
             if self.stage == 0:
                 yaml_dict = {'crazyflies' : []}
