@@ -52,8 +52,8 @@ if __name__ == "__main__":
     timeHelper.sleep(2)
 
     # Upload trajectories to cf
-    # for j, cf in enumerate(allcfs.crazyflies):
-    #     cf.uploadTrajectory(0, 0, trajectories[0])
+    for j, cf in enumerate(allcfs.crazyflies):
+        cf.uploadTrajectory(0, 0, trajectories[0])
 
     # SAFETY CHECK
     print("Starting position okay? Press button to continue...")
@@ -64,17 +64,28 @@ if __name__ == "__main__":
     reverse = True
     timescale = 1.0
     # allcfs.setParam('ctrlMel/log_data', 1)
-    # allcfs.startTrajectory(0, timescale=timescale, reverse=False)
-    # timeHelper.sleep(traj1.duration * timescale + 1.0)
-    allcfs.crazyflies[0].goTo(np.array([-0.66, -0.27, targetHeight]), 0, 4.0)
+    allcfs.startTrajectory(0, timescale=timescale, reverse=False, relative=True)
+    timeHelper.sleep(traj1.duration * timescale + 1.0)
+    # allcfs.crazyflies[0].goTo(np.array([-0.66, -0.27, targetHeight]), 0, 4.0)
     #
-    timeHelper.sleep(4)
-    for j, cf in enumerate(allcfs.crazyflies):
-        cf.uploadTrajectory(1, 0, trajectories[1])
 
-    allcfs.startTrajectory(1, timescale=timescale, reverse=False)
+
+    # timeHelper.sleep(4)
+    for j, cf in enumerate(allcfs.crazyflies):
+        cf.cmdPosition(np.array([-0.66, -0.27, targetHeight]))
+        cf.uploadTrajectory(1, 0, trajectories[1])
+        cf.notifySetpointsStop(1)
+        cf.startTrajectory(1, timescale=timescale, reverse=False, relative=True)
     timeHelper.sleep(traj2.duration * timescale + 0.0)
-    timeHelper.sleep(1)
+
+    # for j, cf in enumerate(allcfs.crazyflies):
+    #     pos = np.array(initialPosition['crazyflies'][j]['initialPosition'])
+    #     cf.cmdPosition(np.array(pos + np.array([0, 0, j * zoffset - zoffset])))
+    #     cf.uploadTrajectory(2, 0, trajectories[2])
+    #     cf.notifySetpointsStop(1)
+    #     cf.startTrajectory(2, timescale=timescale, reverse=False, relative=True)
+    # timeHelper.sleep(traj3.duration * timescale + 0.0)
+
     # allcfs.crazyflies[0].cmdStop()
     # for j, cf in enumerate(allcfs.crazyflies):
     #     cf.uploadTrajectory(2, 0, trajectories[2])
