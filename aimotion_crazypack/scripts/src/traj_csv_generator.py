@@ -44,6 +44,8 @@ def write_csv(fname, knots, coeffs, degree=3):
         writer = csv.writer(f)
         # write a row to the csv file
         writer.writerow(header)
+        lift = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        writer.writerow(lift)
         last_bp = pp[0].x[0]
         zeros = [0, 0, 0, 0]
         for i, bp in enumerate(pp[0].x):
@@ -57,18 +59,21 @@ def write_csv(fname, knots, coeffs, degree=3):
     return pp
 
 if __name__ == "__main__":
-    knots = np.tile(
-        np.hstack((np.zeros(3), np.linspace(0, 1, 9), np.ones(3))),
-        (4, 1))
-    coeffs = np.zeros((4, 11))
-    coeffs[0, :] = np.hstack((0, np.linspace(0, 0.4, 5),
-                                   0.4 * np.ones(5)))
+    spline_params = np.loadtxt("../pos_spline.csv", delimiter=',')
+    knots = np.vstack((spline_params[:, 1:18]+1, np.expand_dims(spline_params[0, 1:18]+1, 0)))
+    coeffs = np.vstack((-spline_params[0, 18:], np.zeros_like(spline_params[0, 18:]), spline_params[1, 18:]+0.7, np.zeros_like(spline_params[0, 18:])))
+    # knots = np.tile(
+    #     np.hstack((np.zeros(3), np.linspace(0, 1, 9), np.ones(3))),
+    #     (4, 1))
+    # coeffs = np.zeros((4, 11))
+    # coeffs[0, :] = np.hstack((0, np.linspace(0, 0.4, 5),
+    #                                0.4 * np.ones(5)))
     degree = 3
 
-    timespan = np.linspace(0, 1, 100)
-    pp = write_csv("csvname.csv", knots, coeffs, degree)
+    timespan = np.linspace(0, 1.5, 100)
+    pp = write_csv("flip_traj_lift.csv", knots, coeffs, degree)
 
-    plt.plot(timespan, pp[0](timespan))
+    plt.plot(timespan, pp[2](timespan))
     plt.show()
 
 

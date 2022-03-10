@@ -10,3 +10,4 @@ aimotion_crazypack/scripts/csv/*
 log
 __pycache__
 .*
+aimotion_crazypack/scripts/data.bin
