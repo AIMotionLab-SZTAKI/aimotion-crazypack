@@ -68,7 +68,7 @@ if __name__ == "__main__":
     allcfs.crazyflies[0].setParam('locSrv/extQuatStdDev', 0.05)
     for cf in allcfs.crazyflies:
         for k in range(40):
-            cf.cmdPosition(np.array([-0.3, y, 0.6]), 0)
+            cf.cmdPosition(np.array([0, y, 0.6]), 0)
             timeHelper.sleepForRate(20)
         cf.notifySetpointsStop()
     # allcfs.crazyflies[0].goTo(np.array([x, y, 0.6]), 0, 2)

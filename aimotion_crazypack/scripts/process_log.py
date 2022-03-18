@@ -30,17 +30,17 @@ class DataProcessing:
         values = np.array(self.values)
         values = values.T
         self.values = values.tolist()
-        # fig, axs = plt.subplots(len(self.values))
-        fig, axs = plt.subplots(3)
-        # for i, log_var in enumerate(self.values):
-        #     axs[i].plot(self.times, log_var)
-        #     axs[i].grid(True)
-        axs[0].plot(self.times, self.values[0])
-        axs[0].plot(self.times, self.values[1])
-        axs[1].plot(self.times, self.values[2])
-        axs[1].plot(self.times, self.values[3])
-        axs[2].plot(self.times, self.values[4])
-        axs[2].plot(self.times, self.values[5])
+        fig, axs = plt.subplots(len(self.values))
+        # fig, axs = plt.subplots(3)
+        for i, log_var in enumerate(self.values):
+            axs[i].plot(self.times, log_var)
+            axs[i].grid(True)
+        # axs[0].plot(self.times, self.values[0])
+        # axs[0].plot(self.times, self.values[1])
+        # axs[1].plot(self.times, self.values[2])
+        # axs[1].plot(self.times, self.values[3])
+        # axs[2].plot(self.times, self.values[4])
+        # axs[2].plot(self.times, self.values[5])
         plt.show()
 
 if __name__ == "__main__":
