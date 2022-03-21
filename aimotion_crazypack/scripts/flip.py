@@ -9,7 +9,7 @@ H = 1.4
 if __name__ == "__main__":
 
     # Adjust flip parameters (these are empirical)
-    T0 = 1
+    T0 = 1.5
     T1 = 0.7
 
     # initialize crazyflie
@@ -33,7 +33,7 @@ if __name__ == "__main__":
         cf.setParam('ctrlFlip/rec_sp_z', 0.6)
         cf.setParam('ctrlGeom/mass', 0.0325)
         cf.setParam('ctrlMel/mass', 0.0325)
-
+        cf.setParam('ctrlGeom/gp', 0)
     # timeHelper.sleep(6)
 
     # start flying!
