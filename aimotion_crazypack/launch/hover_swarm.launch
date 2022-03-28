@@ -12,11 +12,11 @@
       genericLogTopics: ["log1"]
       genericLogTopicFrequencies: [10]
       <?ignore genericLogTopic_log1_Variables: ["ctrlGeom.cmd_pitch", "ctrlGeom.eRy","ctrlGeom.ewy", "ctrlGeom.p_des", "ctrlGeom.p", "ctrlGeom.wdy"]?>
-      <?ignore genericLogTopic_log1_Variables: ["stateEstimateZ.rateRoll","stateEstimateZ.ratePitch", "stateEstimate.qx", "stateEstimate.qy", "ctrlGeom.cmd_roll", "ctrlGeom.cmd_pitch"] ?>      
-      genericLogTopic_log1_Variables: ["ctrlGeom.cmd_roll", "ctrlGeom.cmd_pitch", "ctrlGeom.psi", "ctrlGeom.u0","ctrlGeom.u1"]
+      genericLogTopic_log1_Variables: ["stateEstimateZ.rateRoll","stateEstimateZ.ratePitch", "stateEstimate.qx", "stateEstimate.qy", "ctrlGeom.cmd_roll", "ctrlGeom.cmd_pitch"]  
+      <?ignore genericLogTopic_log1_Variables: ["ctrlGeom.cmd_roll", "ctrlGeom.cmd_pitch", "ctrlGeom.psi", "ctrlGeom.u0","ctrlGeom.u1"]      ?>
       <?ignore genericLogTopic_log1_Variables: ["ctrlGeom.r_roll","stateEstimateZ.ratePitch", "stateEstimateZ.rateYaw", "motor.m1","motor.m2","motor.m3","motor.m4"] ?>
       <?ignore genericLogTopic_log1_Variables: ["stateEstimate.x", "ctrltarget.x","ctrlGeom.thrust", "ctrlGeom.thrust", "stateEstimate.z", "ctrltarget.z"]?> 
-      <?ignore genericLogTopic_log1_Variables: ["motor.m1","motor.m2","motor.m3","motor.m4","stabilizer.pitch","ctrlGeom.p_des", "ctrlGeom.thrust"]    ?>   
+      <?ignore genericLogTopic_log1_Variables: ["motor.m1","motor.m2","motor.m3","motor.m4","stabilizer.pitch", "ctrlGeom.thrust"]    ?>  
       <?ignore genericLogTopic_log1_Variables: ["stabilizer.pitch","ctrlGeom.p_des", "ctrlGeom.thrust", "ctrltarget.z", "stateEstimate.z"]   ?>
       <?ignore genericLogTopic_log1_Variables: ["ctrlMel.cmd_roll","ctrlMel.cmd_pitch","ctrlMel.cmd_yaw","stabilizer.roll","stabilizer.pitch","stabilizer.yaw"] ?>
       # firmware parameters for all drones (use crazyflieTypes.yaml to set per type, or

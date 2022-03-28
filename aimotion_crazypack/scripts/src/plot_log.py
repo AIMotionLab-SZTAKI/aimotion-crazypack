@@ -20,27 +20,36 @@ def read_log(filename='~/.ros/save/logcf4_gp.csv'):
     return res
 
 
-res = read_log('~/.ros/save/logcf4_gp3.csv')
+res = read_log('~/.ros/save/logcf4_nom11.csv')
 indices = [np.abs(grad) > 1e-7 for grad in np.gradient(res["Mx"])]
 rp_scale = 7345302.2678
 
 t = res["t"][indices]
 t = t - t[0]
-fig, axs = plt.subplots(3)
-axs[0].plot(t, res["Mx"][indices]/rp_scale, 'b-')
-axs[0].plot(t, res["My"][indices]/rp_scale, 'r-')
-axs[1].plot(t, res["u0"][indices], 'b-')
-axs[1].plot(t, res["u1"][indices], 'r-')
-axs[2].plot(t, res["psi"][indices], 'b-')
+fig, axs = plt.subplots(5)
+axs[0].plot(t, res["Mx"][indices]/rp_scale)
+axs[1].plot(t, res["My"][indices]/rp_scale)
+axs[2].plot(t, res["u0"][indices])
+axs[3].plot(t, res["u1"][indices])
+axs[4].plot(t, res["psi"][indices])
 
-res = read_log('~/.ros/save/logcf4_nom2.csv')
+res = read_log('~/.ros/save/logcf4_gp11.csv')
+# res = read_log('~/.ros/logcf4.csv')
 indices = [np.abs(grad) > 1e-7 for grad in np.gradient(res["Mx"])]
 
 t = res["t"][indices]
 t = t - t[0]
 # fig, axs = plt.subplots(3)
-axs[0].plot(t, res["Mx"][indices]/rp_scale, 'b--')
-axs[0].plot(t, res["My"][indices]/rp_scale, 'r--')
-axs[1].plot(t, res["u0"][indices], 'b--')
-# axs[1].plot(t, res["u1"][indices], 'r.')
-axs[2].plot(t, res["psi"][indices], 'b--')
+axs[0].plot(t, res["Mx"][indices]/rp_scale)
+axs[1].plot(t, res["My"][indices]/rp_scale)
+axs[2].plot(t, res["u0"][indices])
+axs[3].plot(t, res["u1"][indices])
+axs[4].plot(t, res["psi"][indices])
+axs[0].set_ylabel('$M_x$')
+axs[0].legend(('Nominal geom control', 'Geom control + GP mean'))
+axs[1].set_ylabel('$M_y$')
+axs[2].set_ylabel('$\hat\eta_x$')
+axs[3].set_ylabel('$\hat\eta_y$')
+axs[4].set_ylim([0, 0.1])
+axs[4].set_ylabel('$\Psi$')
+[ax.grid(True) for ax in axs]

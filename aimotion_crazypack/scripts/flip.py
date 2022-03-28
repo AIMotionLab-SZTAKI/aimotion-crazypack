@@ -48,12 +48,12 @@ if __name__ == "__main__":
     timeHelper.sleep(3)
 
     # average motor PWMs
-    allcfs.setParam('motorPowerSet/isAv', 1)
-    timeHelper.sleep(3)
+    # allcfs.setParam('motorPowerSet/isAv', 1)
+    # timeHelper.sleep(3)
 
     # switch on PWM feedforward correction
-    allcfs.setParam('motorPowerSet/isAv', 0)
-    allcfs.setParam('motorPowerSet/isFF', 1)
+    # allcfs.setParam('motorPowerSet/isAv', 0)
+    # allcfs.setParam('motorPowerSet/isFF', 1)
     allcfs.setParam('locSrv/extQuatStdDev', 1.0)
     timeHelper.sleep(2)
 
@@ -61,6 +61,8 @@ if __name__ == "__main__":
     for cf in allcfs.crazyflies:
         cf.setParam('ctrlFlip/isFlipControl', 1)
         cf.startTrajectory(0, timescale=1)
+        cf.setParam('usd/logging', 1)
+
     timeHelper.sleep(T0+T1)  # wait until the maneuver is over
 
     # timeHelper.sleep(0.9)
@@ -71,6 +73,8 @@ if __name__ == "__main__":
             cf.cmdPosition(np.array([0, y, 0.6]), 0)
             timeHelper.sleepForRate(20)
         cf.notifySetpointsStop()
+        cf.setParam('usd/logging', 0)
+
     # allcfs.crazyflies[0].goTo(np.array([x, y, 0.6]), 0, 2)
 
     # timeHelper.sleep(1)
