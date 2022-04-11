@@ -6,11 +6,10 @@ import uav_trajectory
 
 def flipInitParams(cf):
     # send the parameters
-    # cf.uploadTrajectory(0, 0, traj1)
     cf.setParams(params)
     cf.setParam('motorPowerSet/enable', 0)  # we do not want to control the motors manually
     cf.setParam('stabilizer/controller', 4)  # PID controller
-    cf.setParam('ctrlFlip/controller_type', 1)
+    cf.setParam('ctrlFlip/controller_type', 2)
     cf.setParam('ctrlFlip/z0', 2.0)
     cf.setParam('ctrlFlip/rec_sp_z', 0.6)
 
@@ -38,22 +37,20 @@ def goCircles(N, T, h, r, numDrones):
 def goCircles2():
     TIMESCALE = 0.5
     for cf in allcfs.crazyflies:
-        cf.startTrajectory(1, timescale=TIMESCALE, reverse=False)
+        cf.startTrajectory(0, timescale=TIMESCALE, reverse=False)
     timeHelper.sleep(circle0.duration*TIMESCALE)
 
 if __name__ == "__main__":
 
     # Adjust flip parameters (these are empirical)
-    T0 = 0.45
-    T1 = 0.9
+    T0 = 1.8
+    T1 = 0.7
 
     # initialize crazyflie
     swarm = Crazyswarm()
     timeHelper = swarm.timeHelper
     allcfs = swarm.allcfs
 
-    # traj1 = uav_trajectory.Trajectory()
-    # traj1.loadcsv("flip_traj.csv")
 
     circle0 = uav_trajectory.Trajectory()
     circle0.loadcsv("csv/circle_traj_0.csv")
@@ -62,9 +59,9 @@ if __name__ == "__main__":
     circle2 = uav_trajectory.Trajectory()
     circle2.loadcsv("csv/circle_traj_2.csv")
 
-    allcfs.crazyflies[0].uploadTrajectory(1, 0, circle0)
-    allcfs.crazyflies[1].uploadTrajectory(1, 0, circle1)
-    allcfs.crazyflies[2].uploadTrajectory(1, 0, circle2)
+    allcfs.crazyflies[0].uploadTrajectory(0, 0, circle0)
+    allcfs.crazyflies[1].uploadTrajectory(0, 0, circle1)
+    allcfs.crazyflies[2].uploadTrajectory(0, 0, circle2)
 
     params = {'ctrlFlip/T0': T0, 'ctrlFlip/T1': T1}
 
@@ -77,10 +74,10 @@ if __name__ == "__main__":
     numDrones = len(allcfs.crazyflies)
     N = 10
     T = 63
-    r = 0.4
+    r = 0.6
     xinit = [r * np.cos(2 * np.pi * k / numDrones) for k in range(numDrones)]
     yinit = [r * np.sin(2 * np.pi * k / numDrones) for k in range(numDrones)]
-    x = np.array([0, 0, 0])
+    x = np.array([0.3, 0.3, 0.3])
     y = np.array([0.5, 0, -0.5])
     k = 0
 
@@ -116,20 +113,29 @@ if __name__ == "__main__":
     for ID in allcfs.crazyfliesById:
         cf = allcfs.crazyfliesById[ID]
         # cf.takeoff(targetHeight=initHeight+0.2, duration=2)
+        cf.goTo(np.array([0, y[k], initHeight + 0.2]), 0, 1)
 
         cf.setParam('locSrv/extQuatStdDev', 1.0)
+        traj1 = uav_trajectory.Trajectory()
+        traj1.loadcsv("src/flip_traj_lift.csv")
+        cf.uploadTrajectory(1, 0, traj1)
         timeHelper.sleep(2)
 
         cf.setParam('ctrlFlip/isFlipControl', 1)
+        cf.startTrajectory(1, timescale=1)
         timeHelper.sleep(T0 + T1)  # wait until the maneuver is over
 
-        timeHelper.sleep(0.9)
-        cf.goTo(np.array([x[k], y[k], 0.6]), 0, 2)
+        # timeHelper.sleep(0.9)
         cf.setParam('locSrv/extQuatStdDev', 0.05)
+
+        for _ in range(40):
+            cf.cmdPosition(np.array([0, y[k], 0.6]), 0)
+            timeHelper.sleepForRate(20)
+        cf.notifySetpointsStop()
 
         # timeHelper.sleep(1)
         cf.setParam('ctrlFlip/wasFlipControl', 0)
-        # cf.goTo(np.array([x[k], y[k], 0.6]), 0, 2)
+        cf.goTo(np.array([x[k], y[k], 0.6]), 0, 2)
         # timeHelper.sleep(2)
         # cf.land(targetHeight=0.06, duration=3)
         k = k+1

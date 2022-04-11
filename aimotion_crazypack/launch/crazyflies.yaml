@@ -6,3 +6,10 @@ crazyflies:
   - 0.0
   - 0.0
   type: default
+- channel: 90
+  id: 5
+  initialPosition:
+  - 0.0
+  - 0.0
+  - 0.0
+  type: default

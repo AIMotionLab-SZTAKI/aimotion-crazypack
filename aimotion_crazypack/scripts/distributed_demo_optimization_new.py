@@ -299,11 +299,11 @@ def stage_csv_parser(num_of_stages, num_of_vehicles = 3):
 
 stage = 0
 command_list = []
-x_max = 0.9
-x_min = -0.75 # or -0.85 for example
+x_max = 1.1
+x_min = -0.95 # or -0.85 for example
 
-y_min_hula_hoop = -0.05
-y_max_hula_hoop = 0.05
+y_min_hula_hoop = -0.00
+y_max_hula_hoop = 0.00
 
 y_min_audience = -0.35
 y_max_audience = 0.35
@@ -318,20 +318,20 @@ stage = stage + 1
 command = [[], [x_min, y_min_audience], [x_max, y_max_hula_hoop], min_iterations, max_iterations, stage]
 command_list += [command]
 
-# # hula to audience
-# stage = stage + 1
-# command = [[], [x_max, y_max_hula_hoop], [x_min, y_max_audience], min_iterations, max_iterations, stage]
-# command_list += [command]
-#
-# # audience to hula
-# stage = stage + 1
-# command = [[], [x_min, y_max_audience], [x_max, y_min_hula_hoop], min_iterations, max_iterations, stage]
-# command_list += [command]
-#
-# # hula to audience
-# stage = stage + 1
-# command = [[], [x_max, y_min_hula_hoop], [x_min, y_max_audience], min_iterations, max_iterations, stage]
-# command_list += [command]
+# hula to audience
+stage = stage + 1
+command = [[], [x_max, y_max_hula_hoop], [x_min, y_max_audience], min_iterations, max_iterations, stage]
+command_list += [command]
+
+# audience to hula
+stage = stage + 1
+command = [[], [x_min, y_max_audience], [x_max, y_min_hula_hoop], min_iterations, max_iterations, stage]
+command_list += [command]
+
+# hula to audience
+stage = stage + 1
+command = [[], [x_max, y_min_hula_hoop], [x_min, y_max_audience], min_iterations, max_iterations, stage]
+command_list += [command]
 
 for command in command_list:
     run_main(command)

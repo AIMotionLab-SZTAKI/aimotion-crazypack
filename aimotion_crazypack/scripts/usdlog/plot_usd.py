@@ -19,7 +19,7 @@ def moving_average(a, n=3) :
 def filter(a):
     return np.hstack((moving_average(a, 5), 0, 0, 0, 0))
 
-def read_log(filename='/media/crazyfly/UNTITLED/log00'):
+def read_log(filename='/media/crazyfly/UNTITLED/log27'):
     # decode binary log data
     df = cff.decode(filename)
     res = {}
@@ -36,12 +36,19 @@ def read_log(filename='/media/crazyfly/UNTITLED/log00'):
     res["t"] = np.array(df["tick"]) / 1000
     res["x"] = filter(np.array(df["stateEstimate.x"]))
     res["y"] = filter(np.array(df["stateEstimate.y"]))
+    res["z"] = filter(np.array(df["stateEstimate.z"]))
+    res["xd"] = filter(np.array(df["ctrltarget.x"]))
+    res["yd"] = filter(np.array(df["ctrltarget.y"]))
+    res["zd"] = filter(np.array(df["ctrltarget.z"]))
     return res
 
 
 res1 = read_log('log_no_gp')
+# res1 = read_log()
 res2 = read_log('log_with_gp')
 indices1 = [np.abs(grad) > 1e-7 for grad in np.gradient(res1["ind"])]
+x = min([indices1.index(i) for i in indices1 if i == True])
+indices1[x+250:] = [False for _ in indices1[x+250:]]
 indices2 = [np.abs(grad) > 1e-7 for grad in np.gradient(res2["ind"])]
 rp_scale = 132000 * 4 / 0.0325
 
@@ -83,8 +90,21 @@ fig.subplots_adjust(left=0.125,
                     hspace=0.8
                     )
 [ax.grid(True) for ax in axs]
+plt.figure()
+plt.plot(res1["x"][indices1], res1["z"][indices1])
+plt.plot(res2["x"][indices2], res2["z"][indices2])
 plt.show()
 
+# import csv
+#
+# header1 = (res1.keys())
+#
+# rows = [v1 for k1,v1 in res1.items()]
+#
+# with open('csv_log.csv','w') as ofile:
+#     wr = csv.writer(ofile, delimiter=',')
+#     wr.writerow(header1)
+#     wr.writerows(np.array(rows).T)
 
 '''
 res = read_log('~/.ros/save/logcf4_gp11.csv')
