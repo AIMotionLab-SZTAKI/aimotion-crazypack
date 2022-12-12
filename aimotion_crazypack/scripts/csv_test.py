@@ -11,26 +11,30 @@ if __name__ == "__main__":
     allcfs = swarm.allcfs
 
     traj1 = uav_trajectory.Trajectory()
-    traj1.loadcsv("src/flip_traj_lift.csv")
+    traj1.loadcsv("csv/hook_up.csv")
+    traj2 = uav_trajectory.Trajectory()
+    traj2.loadcsv("csv/hook_up_2.csv")
     # traj1.loadcsv("flip_traj.csv")
 
     TRIALS = 1
-    TIMESCALE = 1.0
+    TIMESCALE = 2
     for i in range(TRIALS):
         for cf in allcfs.crazyflies:
+            cf.setParam('stabilizer/controller', 1)
             cf.uploadTrajectory(0, 0, traj1)
 
         allcfs.takeoff(targetHeight=1.0, duration=2.0)
         timeHelper.sleep(2.5)
         for cf in allcfs.crazyflies:
-            pos = np.array(cf.initialPosition) + np.array([0, 0, 1.0])
-            cf.goTo(pos, 0, 2.0)
+            cf.goTo(np.array([-0.5, 1, 1.4]), np.pi/2, 2.0)
         timeHelper.sleep(2.5)
 
-        allcfs.startTrajectory(0, timescale=TIMESCALE)
+        allcfs.startTrajectory(0, timescale=TIMESCALE, relative=False)
         timeHelper.sleep(traj1.duration * TIMESCALE + 2.0)
-        allcfs.startTrajectory(0, timescale=TIMESCALE, reverse=True)
-        timeHelper.sleep(traj1.duration * TIMESCALE + 2.0)
+        for cf in allcfs.crazyflies:
+            cf.uploadTrajectory(1, 0, traj2)
+        allcfs.startTrajectory(1, timescale=TIMESCALE, relative=False)
+        timeHelper.sleep(traj2.duration * TIMESCALE + 2.0)
 
         allcfs.land(targetHeight=0.06, duration=2.0)
         timeHelper.sleep(3.0)

@@ -38,10 +38,10 @@
       object_tracking_type: "motionCapture" # one of motionCapture,libobjecttracker
       send_position_only: False # set to False to send position+orientation; set to True to send position only
       #vicon_host_name: "vicon"
-      motion_capture_host_name: "192.168.1.20"
-      optitrack_host_name: "192.168.1.20"<?ignore "172.16.204.128?>
-      optitrack_server_ip: "192.168.1.20"<?ignore 				"172.16.204.128?>
-      optitrack_local_ip: "192.168.1.10"<?ignore 		"172.16.204.1" ?>
+      motion_capture_host_name: "192.168.1.141"
+      optitrack_host_name: "192.168.1.141"<?ignore "172.16.204.128?>
+      optitrack_server_ip: "192.168.1.141"<?ignore 				"172.16.204.128?>
+      optitrack_local_ip: "192.168.1.65"<?ignore 		"172.16.204.1" ?>
       # qualisys_host_name: "10.0.5.219"
       # qualisys_base_port: 22222
       # vrpn_host_name: "vicon"

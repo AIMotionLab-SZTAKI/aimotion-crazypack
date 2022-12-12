@@ -94,14 +94,9 @@ def moving_average(a, n=3) :
 
 rp_scale = 132000*4/0.0325
 yaw_scale = 132000*4/0.025
-# res1 = read_log_from_tau(filename="/home/crazyfly/.ros/save/logcf4_train.csv")
-# res = read_log_from_tau(filename="/home/crazyfly/.ros/logcf4.csv")
-res = read_log_from_tau_usd(filename="/media/crazyfly/UNTITLED/log23")
-# res2 = read_log_from_tau(filename="/home/crazyfly/.ros/logcf4.csv")
-# res2 = read_log_from_tau(filename="/home/crazyfly/.ros/save/logcf4_train2.csv")
-# res = {}
-# for elem in res1:
-#     res[elem] = np.hstack((res1[elem], res2[elem]))
+
+res = read_log_from_tau_usd(filename="../usdlog/log_no_gp_1")
+
 indices = [np.abs(grad) > 1e-7 for grad in np.gradient(res["ind"])]
 Mx = res["Mx"][indices]/rp_scale
 My = res["My"][indices]/rp_scale
@@ -176,24 +171,6 @@ for i in range(2):
         optimizer.step()
     print(loss.item())
 
-# sf2 = [m.covar_module.outputscale.detach().numpy() for m in model]
-# lscale = [m.covar_module.base_kernel.lengthscale.detach().numpy() for m in model]
-# se2 = [m.likelihood.noise.detach().numpy()**2 for m in model]
-# X = train_x.numpy()[::3]
-# y = [train_yi.numpy()[::3] for train_yi in train_y]
-# K = [np.zeros((X.shape[0], X.shape[0])) for _ in range(2)]
-# for elem, K1 in enumerate(K):
-#     for i in range(K1.shape[0]):
-#         for j in range(K1.shape[0]):
-#             K1[i, j] = RBFkernel(X[i, :], X[j, :], lscale[elem][0], sf2[elem])
-# alpha = [np.linalg.inv(K1+se2[elem]*np.eye(K1.shape[0])) @ y[elem] for elem, K1 in enumerate(K)]
-
-# print("float X[48][4] = " + printC(X))
-# print("float alpha1[48] = " + printC(alpha[0]))
-# print("float alpha2[48] = " + printC(alpha[1]))
-# print("float lam1[4] = " + printC(1/lscale[0]**2))
-# print("float lam2[4] = " + printC(1/lscale[1]**2))
-
 [m.eval() for m in model]
 [l.eval() for l in likelihood]
 num_x = 5
@@ -212,6 +189,6 @@ observed_pred = [likelihood[i](model[i](test_x)) for i in range(2)]
 test_y = [torch.reshape(pred.mean, (num_x, num_y, num_x, num_y)) for pred in observed_pred]
 csv_arr = [torch.reshape(test_yi, (sum_num, 1)) for test_yi in test_y]
 # csv_write = 10000*csv_arr[0].detach().numpy().T
-np.savetxt('ltb.csv', 100000*csv_arr[1].detach().numpy().T, "%i", delimiter=',')
+np.savetxt('ltb.csv', 100000*csv_arr[0].detach().numpy().T, "%i", delimiter=',')
 #
 # ltb = np.loadtxt('ltb.csv', delimiter=',')

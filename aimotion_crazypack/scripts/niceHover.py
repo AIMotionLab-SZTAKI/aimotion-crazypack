@@ -4,7 +4,6 @@ import numpy as np
 from pycrazyswarm import *
 import uav_trajectory
 
-Z = 0.4
 
 if __name__ == "__main__":
     swarm = Crazyswarm()
@@ -17,13 +16,16 @@ if __name__ == "__main__":
     # send the parameters
     for cf in allcfs.crazyflies:
         cf.setParam('motorPowerSet/enable', 0)  # we do not want to control the motors manually
-        cf.setParam('stabilizer/controller', 1)
+        cf.setParam('stabilizer/controller', 2)
+        # cf.setParam('usd/logging', 1)
         # cf.setParam('ctrlGeom/mass', 0.0325)
         # cf.uploadTrajectory(0, 0, circle)
+    Z = [0.2, 0.5, 0.6, 0.2, 0.5, 0.45, 0.65]
 
-
-    allcfs.takeoff(targetHeight=Z, duration=1.0+Z)
-    timeHelper.sleep(4)
+    for i, cf in enumerate(allcfs.crazyflies):
+        cf.takeoff(targetHeight=Z[i], duration=2)
+    timeHelper.sleep(2)
+    # allcfs.crazyflies[0].goTo(np.array([0.3, 0, 1.3]), 0, 3)
     # allcfs.setParam('motorPowerSet/isAv', 1)
     # timeHelper.sleep(3)
     # allcfs.setParam('motorPowerSet/isAv', 0)
@@ -32,5 +34,6 @@ if __name__ == "__main__":
     TIMESCALE = 0.6
     swarm.input.waitUntilButtonPressed()
 
-    allcfs.land(targetHeight=0.07, duration=1.0+Z)
-    timeHelper.sleep(1.0+Z)
+    allcfs.land(targetHeight=0.07, duration=3.0)
+    timeHelper.sleep(3.0)
+    # allcfs.setParam('usd/logging', 0)
