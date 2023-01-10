@@ -37,10 +37,10 @@ def fly():
         while orientation is not None:
             data = s.recv(15)
             orientation = tcp_data(data)
-            if orientation[2] >= 0.4:
+            if orientation[2] is not 0:
                 allcfs.crazyflies[0].cmdPosition(np.array([orientation[0], orientation[1], orientation[2]]), 0)
             else:
-                print("Landing")
-                allcfs.land(targetHeight=0.2, duration=3)
-                timeHelper.sleep(3.0)
-                break
+                allcfs.crazyflies[0].cmdPosition(np.array([orientation[0], orientation[1], 0.40]), 0)
+                allcfs.crazyflies[0].stop()
+                s.close()
+                exit()

@@ -31,6 +31,7 @@ def write_csv(fname, knots, coeffs, degree=3):
                 can be used for plotting the result
             """
     spl = [interp.BSpline(knots[i, :], coeffs[i, :], degree) for i in range(4)]
+    # spl[2].c = spl[2].c - 0.7
     pp = [interp.PPoly.from_spline(spl_) for spl_ in spl]
 
     header = ["duration", "x^0", "x^1", "x^2", "x^3", "x^4", "x^5", "x^6", "x^7", "y^0", "y^1", "y^2", "y^3", "y^4",
@@ -71,7 +72,7 @@ if __name__ == "__main__":
     degree = 3
 
     timespan = np.linspace(0, 1.5, 100)
-    pp = write_csv("flip_traj_lift.csv", knots, coeffs, degree)
+    pp = write_csv("flip_traj_lift_from_zero.csv", knots, coeffs, degree)
 
     plt.plot(timespan, pp[2](timespan))
     plt.show()

@@ -24,7 +24,7 @@ if __name__ == "__main__":
 
     for i, cf in enumerate(allcfs.crazyflies):
         cf.takeoff(targetHeight=Z[i], duration=2)
-    timeHelper.sleep(2)
+    # timeHelper.sleep(2)
     # allcfs.crazyflies[0].goTo(np.array([0.3, 0, 1.3]), 0, 3)
     # allcfs.setParam('motorPowerSet/isAv', 1)
     # timeHelper.sleep(3)
@@ -33,7 +33,9 @@ if __name__ == "__main__":
     print("press button to continue... :)")
     TIMESCALE = 0.6
     swarm.input.waitUntilButtonPressed()
+    for cf in allcfs.crazyflies:
+        cf.setParam('motorPowerSet/enable', 1)
 
-    allcfs.land(targetHeight=0.07, duration=3.0)
-    timeHelper.sleep(3.0)
+    # allcfs.land(targetHeight=0.07, duration=3.0)
+    # timeHelper.sleep(3.0)
     # allcfs.setParam('usd/logging', 0)
