@@ -33,9 +33,9 @@ if __name__ == "__main__":
     print("press button to continue... :)")
     TIMESCALE = 0.6
     swarm.input.waitUntilButtonPressed()
-    for cf in allcfs.crazyflies:
-        cf.setParam('motorPowerSet/enable', 1)
+    # for cf in allcfs.crazyflies:
+    #     cf.setParam('motorPowerSet/enable', 1)
 
-    # allcfs.land(targetHeight=0.07, duration=3.0)
+    allcfs.land(targetHeight=0.07, duration=3.0)
     # timeHelper.sleep(3.0)
     # allcfs.setParam('usd/logging', 0)

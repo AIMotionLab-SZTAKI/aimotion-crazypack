@@ -10,9 +10,8 @@
       world_frame: "/world"
       # Logging configuration (Use enable_logging to actually enable logging)
       genericLogTopics: ["log1"]
-      genericLogTopicFrequencies: [100]
-      <?ignore genericLogTopic_log1_Variables: ["ext_pose.x","ext_pose.y","ext_pose.z","kalman.inFlight"] ?>
-      <?ignore genericLogTopic_log1_Variables: ["ctrlGeom.cmd_roll", "ctrlGeom.cmd_pitch", "ctrlGeom.psi", "ctrlGeom.u0","ctrlGeom.u1"]      ?>
+      genericLogTopicFrequencies: [10]
+      genericLogTopic_log1_Variables: ["ctrltarget.ax","ctrltarget.ay","ctrltarget.az","ctrltarget.vx","ctrltarget.vy","ctrltarget.vz"] 
       <?ignore genericLogTopic_log1_Variables: ["ctrlGeom.r_roll","stateEstimateZ.ratePitch", "stateEstimateZ.rateYaw", "motor.m1","motor.m2","motor.m3","motor.m4"] ?>
       <?ignore genericLogTopic_log1_Variables: ["stateEstimate.vx", "ctrltarget.vx","stateEstimate.vy", "ctrltarget.vy", "stateEstimate.vz", "ctrltarget.vz"] ?>
       <?ignore genericLogTopic_log1_Variables: ["motor.m1","motor.m2","motor.m3","motor.m4","stabilizer.pitch", "ctrlGeom.thrust"]    ?>  
@@ -25,7 +24,7 @@
           enHighLevel: 1
         stabilizer:
           estimator: 2 # 1: complementary, 2: kalman
-          controller: 2 # 1: PID, 2: mellingerazyflies[0].cmdPosition(np.array([orientation[0], orientation[1], orientation[2]]), 0)
+          controller: 1 # 1: PID, 2: mellinger
 
         ring:
           effect: 16 # 6: double spinner, 7: solid color, 16: packetRate
@@ -43,19 +42,19 @@
       object_tracking_type: "motionCapture" # one of motionCapture,libobjecttracker
       send_position_only: False # set to False to send position+orientation; set to True to send position only
       #vicon_host_name: "vicon"
-      motion_capture_host_name: "192.168.1.141"
-      optitrack_host_name: "192.168.1.141"<?ignore "172.16.204.128?>
-      optitrack_server_ip: "192.168.1.141"<?ignore 				"172.16.204.128?>
-      optitrack_local_ip: "192.168.1.65"<?ignore 		"172.16.204.1" ?>
+      motion_capture_host_name: "192.168.2.141"
+      optitrack_host_name: "192.168.2.141"
+      optitrack_server_ip: "192.168.2.141"
+      optitrack_local_ip: "192.168.2.65"
       # qualisys_host_name: "10.0.5.219"
       # qualisys_base_port: 22222
       # vrpn_host_name: "vicon"
       save_point_clouds: ~/pointCloud.ot
       print_latency: False
-      write_csvs: True
+      write_csvs: False
       force_no_cache: False
       enable_parameters: True
-      enable_logging: True
+      enable_logging: False
     </rosparam>
   </node>
 

@@ -11,7 +11,7 @@ if __name__ == "__main__":
     # Adjust flip parameters (these are empirical)
     ### Revert ###
     T0 = 0.0
-    T1 = 0.9
+    T1 = 0.7
     ###
     # T0 = 0.7
     # T1 = 0.7
@@ -23,7 +23,8 @@ if __name__ == "__main__":
 
     traj1 = uav_trajectory.Trajectory()
     ### Revert ###
-    traj1.loadcsv("../src/flip_traj_from_zero.csv")
+    # traj1.loadcsv("../src/flip_traj_from_zero.csv")
+    traj1.loadcsv("../src/flip_traj_23.csv")
     ###
     # traj1.loadcsv("flip_traj.csv")
 
@@ -31,7 +32,7 @@ if __name__ == "__main__":
 
     # send the parameters
     # for cf in allcfs.crazyflies:
-    cf = allcfs.crazyfliesById[3]
+    cf = allcfs.crazyfliesById[9]
     ### Revert ###
     cf.uploadTrajectory(0, 0, traj1)
     ###
@@ -51,9 +52,11 @@ if __name__ == "__main__":
     # cf.setParam('ctrlGeom/mass', 0.0325)
     ### Revert ###
     cf.setParam('ctrlGeom/mass', 0.036)
+    cf.setParam('ctrlGeom/robust', 0)
+    cf.setParam('ctrlGeom/delta_R', 0.002)
     # cf.setParam('ctrlGeom/kR_xy', 0.068)
     # cf.setParam('ctrlGeom/kw_xy', 0.0098)
-    # cf.setParam('ctrlGeom/gp', 1)
+    cf.setParam('ctrlGeom/gp', 0)
     ###
 
     # timeHelper.sleep(6)
@@ -61,7 +64,7 @@ if __name__ == "__main__":
     # start flying!
     initHeight = 0.6
     x = 0.4
-    y = 0
+    y = -0.8
     cf.takeoff(targetHeight=initHeight+0.2, duration=2)
     timeHelper.sleep(2)
     init_pos = cf.position()
@@ -79,14 +82,14 @@ if __name__ == "__main__":
     # switch on PWM feedforward correction
     cf.setParam('motorPowerSet/isAv', 0)
     cf.setParam('motorPowerSet/isFF', 1)
-    timeHelper.sleep(2)
+    timeHelper.sleep(5)
 
     ## Begin flip #############################
     # for cf in allcfs.crazyflies:
     cf.setParam('ctrlFlip/isFlipControl', 1)
         ### Revert ###
     cf.startTrajectory(0, timescale=1)
-    cf.setParam('usd/logging', 1)
+    # cf.setParam('usd/logging', 1)
         ###
     # allcfs.setParam('locSrv/extQuatStdDev', 1.0)
     # allcfs.crazyflies[0].goTo(np.array([x, y, 0.9]), 0, 0.01)
@@ -102,7 +105,7 @@ if __name__ == "__main__":
     for k in range(40):
         cf.cmdPosition(np.array([x, y, 0.8]), 0)
         timeHelper.sleepForRate(20)
-    cf.setParam('usd/logging', 0)
+    # cf.setParam('usd/logging', 0)
     cf.notifySetpointsStop()
     cf.goTo(np.array([x, y, 0.8]), 0, 0.1)
     timeHelper.sleep(1)
